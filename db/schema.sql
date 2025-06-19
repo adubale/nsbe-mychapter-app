@@ -1,0 +1,70 @@
+-- MEMBERS TABLE
+CREATE TABLE members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    major VARCHAR(255),
+    classification VARCHAR(50),
+    national_dues_paid BOOLEAN DEFAULT FALSE,
+    local_dues_paid BOOLEAN DEFAULT FALSE,
+    points INT DEFAULT 0,
+    headshot VARCHAR(255), -- e.g., file path or URL
+    resume VARCHAR(255),   -- e.g., file path or URL
+    joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- COMMITTEES TABLE
+CREATE TABLE committees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    committee_name VARCHAR(100) NOT NULL,
+    zone VARCHAR(100),
+    chairperson_id INT,
+    meeting_day VARCHAR(50),
+    meeting_time TIME,
+    meeting_location VARCHAR(255),
+    resources VARCHAR(255), -- URL to SharePoint folder or other
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (chairperson_id) REFERENCES members(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- COMMITTEE MEMBERS JOIN TABLE
+CREATE TABLE committee_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    committee_id INT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (member_id) REFERENCES members(id),
+    FOREIGN KEY (committee_id) REFERENCES committees(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- EVENTS TABLE
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    date DATE NOT NULL,
+    location VARCHAR(255),
+    description TEXT,
+    points_value INT DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- ATTENDANCE TABLE
+CREATE TABLE attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    member_id INT NOT NULL,
+    event_id INT NOT NULL,
+    attended BOOLEAN DEFAULT TRUE,
+    check_in_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    points_awarded INT DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (member_id) REFERENCES members(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
