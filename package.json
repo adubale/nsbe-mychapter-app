@@ -1,0 +1,25 @@
+{
+  "name": "nsbe-mychapter-app",
+  "version": "1.0.0",
+  "description": "Hello world!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adubale/nsbe-mychapter-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adubale/nsbe-mychapter-app/issues"
+  },
+  "homepage": "https://github.com/adubale/nsbe-mychapter-app#readme",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}
