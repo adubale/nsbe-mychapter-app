@@ -9,4 +9,4 @@ BDY=$(<"$1")
 
 echo $HDR
 echo $BDY
-curl -X POST -h ($HDR) -d ($BDY) http://localhost:1337
+curl -X POST -H "$HDR" -d "$BDY" http://localhost:1337
